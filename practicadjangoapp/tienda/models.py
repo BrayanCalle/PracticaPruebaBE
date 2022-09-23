@@ -9,7 +9,8 @@ class Tienda(models.Model):
 
     nombre = models.CharField(max_length=80, verbose_name="Nombre")
     direccion = models.CharField(max_length=50, verbose_name="Dirección")
-    estado = models.BooleanField(blank=False)
+    estado = models.BooleanField(blank=False, help_text="El estado sirve para mostrar si la tienda esta abierta o cerrada")
+    imagen_tienda = models.ImageField(upload_to='photos/tienda/local', verbose_name="Imagen Tienda")
 
     def __str__(self):
         return "{}".format(self.nombre)
@@ -35,10 +36,11 @@ class Producto(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     nombre = models.CharField(max_length=100, verbose_name="Nombre")
-    cantidad = models.PositiveIntegerField(verbose_name="Cantidad", default=0)
-    precio = models.DecimalField(max_digits=12, decimal_places=2, verbose_name="Precio", default=0.0)
     descripcion = models.TextField(verbose_name="Descripción", null=True, blank=True)
+    precio = models.DecimalField(max_digits=12, decimal_places=2, verbose_name="Precio", default=0.0)
+    cantidad = models.PositiveIntegerField(verbose_name="Cantidad", default=0)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, related_name="productos")
+    imagen_producto = models.ImageField(upload_to='photos/tienda/producto', verbose_name="Imagen Producto")
 
     def __str__(self):
         return "{} Price: {}".format(self.nombre, self.precio)
